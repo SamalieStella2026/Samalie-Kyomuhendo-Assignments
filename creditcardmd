@@ -1,0 +1,32 @@
+Why I used "long long" instead of just "int":
+
+A credit card number can have up to 16 digits. 
+A normal number type in C++ (called int) can only safely hold about 9 or 10 digits before it starts giving wrong answers —
+ kind of like trying to fit a big number into a box that's too small, and some of it "spills over" and gets lost. long long is just a bigger box, so the whole card number fits properly without getting messed up.
+
+Why I broke the code into small pieces (functions):
+
+Instead of writing one giant block of code that tries to do everything at once, I split the work into small helper tasks, where each one only does ONE simple job. This is like following a recipe step-by-step instead of trying to cook the whole meal in one confusing move. It's easier to check each step is correct, and easier to fix if something goes wrong.
+ I used AI to help me which taught me about the the Luhn algorithm and how it works?
+I afterwards used the different functions to eventually come up with the results i required validate the card.
+The algorithm works such that eventually the sum can actually be divided by 10 to prove its even.
+Why I add up the digits in two different groups:
+
+The trick to checking a card number works like this:
+
+Starting from the right side of the number, every second digit gets doubled (multiplied by 2).
+If doubling that digit gives a two-digit answer (like 8 × 2 = 16), I don't use "16" as it is — I add the "1" and the "6" together to get "7".
+The digits that don't get doubled are just added normally.
+At the end, I add both totals together. If that final number can be divided evenly by 10 (no remainder), the card number is considered valid.
+
+I made one helper function to handle the "doubled" digits, and another to handle the normal digits, because trying to do both at the same time in one place made the code confusing and easy to get wrong.
+
+Why I check the first digit(s) of the number:
+
+Real cards always start with certain numbers depending on the company that issued them — for example, Visa cards start with 4, MasterCard starts with 5. So before doing any of the harder math, I first check: does this number even start like a real card? If not, there's no point continuing — it's automatically fake.
+
+Why I check the length of the number first:
+
+Real card numbers are always between 13 and 16 digits long. So the very first thing my program checks is: is the number even the right length? This is the fastest, simplest check, so I do it before anything else — no point doing complicated math on a number that's obviously too short or too long to be real.
+
+Simple summary: I broke a complicated bank trick into small, easy steps, and used a bigger "number box" (long long) so nothing gets cut off, since I wanted my code to be easy to follow and easy to prove was working correctly.
