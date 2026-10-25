@@ -1,0 +1,80 @@
+include <iostream>
+#include <string>
+using namespace std;
+
+class Animal {
+public:
+    string name;
+    int age;
+
+    void eat() {
+        cout << name << " is eating." << endl;
+    }
+
+    void showAnimalInfo() {
+        cout << "Name: " << name << ", Age: " << age << endl;
+    }
+};
+
+class Dog : public Animal {
+public:
+    string breed;
+
+    void bark() {
+        cout << name << " says: Woof!" << endl;
+    }
+
+    void showDogInfo() {
+        showAnimalInfo();   // inherited from Animal
+        cout << "Breed: " << breed << endl;
+    }
+};
+
+
+class Puppy : public Dog {
+public:
+    int weeksOld;
+
+    void play() {
+        cout << name << " is playing with a ball." << endl;
+    }
+
+    void showPuppyInfo() {
+        showDogInfo();      // inherited from Dog
+        cout << "Weeks old: " << weeksOld << endl;
+    }
+};
+
+int main() {
+    
+    Animal cat;
+    cat.name = "Tom";
+    cat.age = 3;
+    cout << "--- Animal object ---" << endl;
+    cat.showAnimalInfo();
+    cat.eat();
+
+    
+    Dog dog;
+    dog.name = "Rex";      // from Animal
+    dog.age = 5;           // from Animal
+    dog.breed = "Bulldog"; // from Dog
+    cout << endl << "--- Dog object ---" << endl;
+    dog.showDogInfo();
+    dog.eat();             // inherited from Animal
+    dog.bark();            // defined in Dog
+
+    
+    Puppy puppy;
+    puppy.name = "Bella";  // from Animal
+    puppy.age = 1;         // from Animal
+    puppy.breed = "Labrador"; // from Dog
+    puppy.weeksOld = 10;   // from Puppy
+    cout << endl << "--- Puppy object ---" << endl;
+    puppy.showPuppyInfo();
+    puppy.eat();           // from Animal (grandparent)
+    puppy.bark();          // from Dog (parent)
+    puppy.play();          // from Puppy (its own)
+
+    return 0;
+}
