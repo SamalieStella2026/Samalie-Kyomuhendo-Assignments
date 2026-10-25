@@ -1,0 +1,95 @@
+// Polymorphism example using virtual functions
+// Base class: Animal   Derived classes: Dog, Cat, Cow
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Base class with a virtual function
+class Animal {
+public:
+    string name;
+
+    Animal(string n) {
+        name = n;
+    }
+
+    // virtual means the derived class version is chosen at runtime
+    virtual void makeSound() {
+        cout << name << " makes a sound." << endl;
+    }
+
+    virtual ~Animal() {}   // virtual destructor
+};
+
+// Derived class 1
+class Dog : public Animal {
+public:
+    Dog(string n) : Animal(n) {}
+
+    void makeSound() {
+        cout << name << " the dog says: Woof!" << endl;
+    }
+};
+
+// Derived class 2
+class Cat : public Animal {
+public:
+    Cat(string n) : Animal(n) {}
+
+    void makeSound() {
+        cout << name << " the cat says: Meow!" << endl;
+    }
+};
+
+// Derived class 3
+class Cow : public Animal {
+public:
+    Cow(string n) : Animal(n) {}
+
+    void makeSound() {
+        cout << name << " the cow says: Moo!" << endl;
+    }
+};
+
+// Takes a reference to the BASE class, but works for any derived object
+void letAnimalSpeak(Animal &a) {
+    a.makeSound();
+}
+
+int main() {
+    Dog dog("Rex");
+    Cat cat("Tom");
+    Cow cow("Daisy");
+
+    
+    cout << "--- Using a base class pointer ---" << endl;
+    Animal *ptr;
+
+    ptr = &dog;
+    ptr->makeSound();   // calls Dog's version
+
+    ptr = &cat;
+    ptr->makeSound();   // calls Cat's version
+
+    ptr = &cow;
+    ptr->makeSound();   // calls Cow's version
+
+  
+    cout << endl << "--- Using a base class reference ---" << endl;
+    letAnimalSpeak(dog);
+    letAnimalSpeak(cat);
+    letAnimalSpeak(cow);
+
+    
+    cout << endl << "--- Using an array of pointers ---" << endl;
+    Animal *farm[3];
+    farm[0] = &dog;
+    farm[1] = &cat;
+    farm[2] = &cow;
+
+    for (int i = 0; i < 3; i++) {
+        farm[i]->makeSound();   // same call, different behaviour
+    }
+
+    return 0;
+}
